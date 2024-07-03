@@ -1,0 +1,35 @@
+extends ../../layout/defaut.pug
+
+block main  
+    if(role.permission.includes("roles_create"))          
+
+        h1(class="mb-4") Thêm nhóm phân quyền
+
+        form(
+            action=`${prefixAdmin}/roles/create`
+            method="POSt"
+        )
+            div(class="form-group")
+                label(for="title") Tiêu đề
+                input(
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    required
+                )
+            div(class="form-group")
+                label(for="desc") Mô tả
+                input(
+                    type="text"
+                    class="form-control"
+                    id="des"
+                    name="description"
+                )
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Tạo mới
+    
+    script(src="/admin/js/roles.js")            

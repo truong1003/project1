@@ -1,0 +1,100 @@
+extends ../../layout/defaut.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/form-search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-trash.pug
+include ../../mixins/show-alert.pug
+
+
+block main 
+    +alert-success(5000)
+    h1 Danh sách sản phẩm
+
+    .card.mb-3 
+        .card-header Bộ lọc và Tìm kiếm 
+        .card-body
+            .row 
+                .col-6 
+                    //+filter-status(find)
+  
+                .col-6 
+                    +form-search(keyword)
+
+
+
+    .card.mb-3 
+        .card-header Danh sách
+        .card-body
+            +form-trash(`${prefixAdmin}/products/trash/change-multi?_method=PATCH`)
+
+            table(
+                class="table table-hover table-sm "
+                checkbox-multi
+            )
+                thead 
+                    tr
+                        th 
+                            input(type="checkbox" name="checkall") 
+                        th STT 
+                        th Hình ảnh 
+                        th Tiêu đề 
+                        th Người xóa
+                        th Hành động
+                
+                tbody
+                    each item ,index in products 
+                        tr 
+                            td 
+                                input(
+                                    type="checkbox"
+                                    name="id"
+                                    value=item.id
+                                )
+                            td #{index +1}
+                            td 
+                                img(
+                                    src=item.thumbnail
+                                    alt=item.title
+                                    width='100px'
+                                    height='auto'
+                                )
+                            td #{item.title}   
+                            td 
+                                p #{item.fullName}  
+                                if(item.deletedBy.deletedAt)    
+                                    p #{moment(item.deletedBy.deletedAt).format("DD/MM/YYYY")}
+                            td  
+                                button(
+                                    class='btn btn-success btn-sm ml-1'
+                                    data-id=item.id
+                                    button-restore
+                                ) Khôi phục
+                                button(
+                                    class='btn btn-danger btn-sm ml-1'
+                                    data-id=item.id
+                                    button-trash-deleted
+                                ) Xóa
+            a(
+                href="/admin/products" 
+                class="btn btn-sm ml-1 btn-outline-success"
+            ) Trở về lại trang sản phẩm 
+                                
+    +pagination(pagination)
+     
+    form(action="" 
+        method="POST"
+        id="form-restore-id"
+        data-path=`${prefixAdmin}/products/restore`
+    ) 
+    form(action="" 
+        method="POST"
+        id="form-trash-deleted"
+        data-path=`${prefixAdmin}/products/trash/deleted`
+    )
+    form(action="" 
+        method="POST"
+        id="form-trash-change-multi"
+        data-path=`${prefixAdmin}/products/trash/change-multi`
+    )
+    script(src="/admin/js/products.js")  
+                    

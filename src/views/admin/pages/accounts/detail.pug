@@ -1,0 +1,34 @@
+extends ../../layout/defaut.pug
+
+block main 
+    if(account.fullName)
+        h1(class="mb-4") #{account.fullName}
+
+    if(account.email)
+        h1(class="mb-4") Email: #{account.email}
+
+    if(role.title)
+        h1(class="mb-4") Nhóm quyền: #{role.title}
+    
+    if(account.thumbnail)
+        div(class="mb-4")
+            img(
+                src=account.thumbnail 
+                style= "width :100px"
+            )
+
+    if(account.status)
+        div(class="mb-4") 
+            span Trạng thái: 
+                if(account.status=="active")
+                    span(class="badge badge-success") Hoạt động
+                else 
+                    span(class="badge badge-danger") Dừng hoạt động
+    
+
+    a(
+        href=`${prefixAdmin}/products-category/edit/${account.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa
+    script(src="/admin/js/products-category.js")        
+     
