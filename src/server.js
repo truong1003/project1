@@ -13,6 +13,8 @@ const flash = require('express-flash')
 const moment = require('moment')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const http = require('http');
+const { Server } = require("socket.io");
 db.connect()
 
 
@@ -37,6 +39,14 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 app.locals.prefixAdmin=systemConfig.prefixAdmin
 app.locals.moment=moment
 
+//SocketIO
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected')
+})
+
 
 app.use(methodOverride('_method'))
 routerAdmin(app)
@@ -47,6 +57,6 @@ app.get("*",(req,res)=>{
   })
 })
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
