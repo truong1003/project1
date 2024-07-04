@@ -4,13 +4,21 @@ const Users=require("../../models/user")
 class index{
     async index(req,res){
         const user_id=res.locals.user.id
+        const fullName=res.locals.user.fullName
 
         //SocketIO//
         _io.once('connection', (socket) => {
             socket.on("Client_Send_Message",async (content)=>{
                 const chat = new Chats({user_id:user_id,content:content})
                 await chat.save()
+
+                _io.emit("Sever_Return_Message",({
+                    userId:user_id,
+                    fullName: fullName,
+                    content: content
+                }))
             })
+
         })
         //End SocketIO//
         

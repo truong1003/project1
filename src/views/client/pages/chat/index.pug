@@ -9,7 +9,7 @@ block main
         
         .row 
             .col-12 
-                .chat 
+                .chat(my-id=user.id)
                     //- .inner-head
                     //-     .inner-avata
                     //-     .inner-name Em yêu
@@ -20,20 +20,6 @@ block main
                                     .inner-name #{chat.infoUser.fullName}
                                 .inner-content
                                     | #{chat.content}
-                        //- .inner-outgoing
-                        //-     .inner-content
-                        //-         | test 123
-                        //- .inner-incoming 
-                        //-     .inner-name Truong 
-                        //-     .inner-content
-                        //-         | truong luu
-                        //- .inner-outgoing
-                        //-     .inner-content
-                        //-         | 1234
-                        //- .inner-incoming 
-                        //-     .inner-name Truong 
-                        //-     .inner-content
-                        //-         | nho dang
                     .inner-foot 
                         form(
                             class="inner-form"

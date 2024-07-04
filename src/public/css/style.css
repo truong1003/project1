@@ -245,14 +245,36 @@
 /* End Show Alert */
 
 /* Chat */
-.chat .inner-name{
-
+.chat .inner-head .inner-name{
+    display: inline-block;
+    font-weight: 600;
+    margin-left: 5px;
 }
 
-.chat  .inner-body {
-    padding: 20px;
-    height: 300px;
+
+.chat .inner-body {
+    padding: 10px;
+    max-height: 450px;
     overflow-y: auto;
+}
+
+.chat .inner-body .inner-name{
+    font-weight: 600;
+}
+
+.chat .inner-body .inner-content{
+    background: #f1f1f1;
+    margin-bottom: 10px;
+    max-width: 220px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    line-height: 1.4;
+}
+
+.chat .inner-outgoing .inner-content{
+    margin-left: auto;
+    background: #fe5da3;
+    color: #fff;
 }
 
 .chat .inner-foot {
@@ -274,14 +296,8 @@
 .inner-incoming .inner-content {
     background-color: #f1f1f1;
 }
-.inner-outgoing .inner-content {
-    background-color: #ffebef;
-    color: white;
-    text-align: right;
-    align-self: flex-end;
-    background-color: #ff69b4;
-}
 
+/* */
 .chat .inner-form{
     display: flex;
     align-items: center;
