@@ -8,7 +8,7 @@ const Chats = new Schema({
     images: Array,
     deleted:{
         type: Boolean,
-        default: fales
+        default: false
     },
     deletedAt: Date
 }
