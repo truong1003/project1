@@ -1,0 +1,46 @@
+extends ../../layout/defaut.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head("Chat")
+        
+        .row 
+            .col-12 
+                .chat 
+                    //- .inner-head
+                    //-     .inner-avata
+                    //-     .inner-name Em yêu
+                    .inner-body
+                        .inner-incoming 
+                            .inner-name Truong 
+                            .inner-content
+                                | alo 123
+                        .inner-outgoing
+                            .inner-content
+                                | test 123
+                        .inner-incoming 
+                            .inner-name Truong 
+                            .inner-content
+                                | truong luu
+                        .inner-outgoing
+                            .inner-content
+                                | 1234
+                        .inner-incoming 
+                            .inner-name Truong 
+                            .inner-content
+                                | nho dang
+                    .inner-foot 
+                        form(
+                            class="inner-form"
+                            action=""
+                        )           
+                            input(
+                                type="text"
+                                placeholder="Nhập nội dung ...."
+                                name="content"
+                            )            
+                            button 
+                                i.fa-solid.fa-paper-plane     
