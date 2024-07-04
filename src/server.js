@@ -42,11 +42,7 @@ app.locals.moment=moment
 //SocketIO
 const server = http.createServer(app);
 const io = new Server(server);
-
-io.on('connection', (socket) => {
-  console.log('a user connected')
-})
-
+global._io= io
 
 app.use(methodOverride('_method'))
 routerAdmin(app)
