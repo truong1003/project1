@@ -8,8 +8,11 @@ const myAccountRouter=require('./my-account')
 const settingsRouter=require('./settings.route')
 const systemConfig=require('../../config/system')
 const authMiddleware=require("../../middlwares/admin/auth")
+const authController=require('../../controllers/admin/authController')
+
 function route(app){
     const PATH_ADMIN=systemConfig.prefixAdmin
+    app.get(PATH_ADMIN, authController.login)
     app.use( PATH_ADMIN+'/dashboard',authMiddleware.requireAuth,dashboardRoutes)
     app.use( PATH_ADMIN+'/products',authMiddleware.requireAuth,productdRoutes)
     app.use(PATH_ADMIN+'/products-category',authMiddleware.requireAuth,productdCategoryRoutes)
