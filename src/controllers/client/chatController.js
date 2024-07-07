@@ -19,6 +19,13 @@ class index{
                 }))
             })
 
+            socket.on("Client_Send_Typing", (type)=>{
+                socket.broadcast.emit("Server_Return_Typing",({
+                    userId:user_id,
+                    fullName: fullName,
+                    type: type
+                }))
+            })
         })
         //End SocketIO//
         

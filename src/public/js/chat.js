@@ -10,6 +10,7 @@ if(formSendData){
         if(content){
             socket.emit("Client_Send_Message",(content))
             e.target.elements.content.value=""
+            socket.emit("Client_Send_Typing","hidden")
         }
     })
 }
@@ -19,6 +20,7 @@ if(formSendData){
 socket.on("Sever_Return_Message",(data)=>{
     const my_id=document.querySelector("[my-id]").getAttribute("my-id")
     const body=document.querySelector(".chat .inner-body")
+    const boxTyping=document.querySelector(".inner-list-typing")
 
     const div=document.createElement("div")
     
@@ -35,7 +37,7 @@ socket.on("Sever_Return_Message",(data)=>{
         ${htmlFullName}
         <div class="inner-content">${data.content}</div>
     `
-    body.appendChild(div)
+    body.insertBefore(div,boxTyping)
 
     body.scrollTop= body.scrollHeight
 
@@ -48,6 +50,21 @@ if(bodyChat){
     bodyChat.scrollTop= bodyChat.scrollHeight
 }
 // End Scroll Chat//
+
+// Show Typing//
+var timeOut
+const showTyping=() =>{
+    socket.emit("Client_Send_Typing", "show")
+
+        clearTimeout(timeOut)
+
+        timeOut = setTimeout(()=>{
+            socket.emit("Client_Send_Typing","hidden")
+        },3000)
+}
+
+// End Show Typing//
+
 
 // emoji-picker //
 //Show icon
@@ -63,12 +80,61 @@ if(buttonIcon){
 //Inser icon
 const emojiPpicker = document.querySelector("emoji-picker")
 if(emojiPpicker){
+
+    var timeOut
+
     const inputChat = document.querySelector(".chat .inner-form input[name='content']")
 
     emojiPpicker.addEventListener("emoji-click",(event)=>{
         const icon = event.detail.unicode
-    
         inputChat.value= inputChat.value + icon
+        const end =inputChat.value.length
+        inputChat.setSelectionRange(end,end)
+        inputChat.focus()
+        showTyping()
+    })
+
+    inputChat.addEventListener("keyup",()=>{
+        showTyping()
     })
 }
 // End emoji-picker //
+
+/* Server_Return_Typing */
+const elementTyping=document.querySelector(".chat .inner-list-typing")
+if(elementTyping){
+    
+    socket.on("Server_Return_Typing",(data)=>{
+        if(data.type=="show"){
+
+            const exitsTyping=elementTyping.querySelector(`[user_id="${data.userId}"]`)
+
+            if(!exitsTyping){
+                const boxTyping=document.createElement("div")
+                boxTyping.classList.add("box-typing")
+                boxTyping.setAttribute("user_id", data.userId)
+        
+                boxTyping.innerHTML=`
+                    <div class="inner-name">${data.fullName}</div>
+                    <div class="inner-dots">
+                        <span> </span>
+                        <span> </span>
+                        <span> </span>
+                    </div>
+                `
+                elementTyping.appendChild(boxTyping)
+                bodyChat.scrollTop= bodyChat.scrollHeight
+            }
+        }else{
+            const boxTypingRemove=elementTyping.querySelector(`[user_id="${data.userId}"]`)
+
+            if(boxTypingRemove){
+                elementTyping.removeChild(boxTypingRemove)
+            }
+        }
+       
+    })
+}
+
+
+/* End Server_Return_Typing */
