@@ -8,14 +8,15 @@ class index{
 
         //SocketIO//
         _io.once('connection', (socket) => {
-            socket.on("Client_Send_Message",async (content)=>{
-                const chat = new Chats({user_id:user_id,content:content})
+            socket.on("Client_Send_Message",async (data)=>{
+                const chat = new Chats({user_id:user_id,content:data.content,images:data.image})
                 await chat.save()
 
                 _io.emit("Sever_Return_Message",({
                     userId:user_id,
                     fullName: fullName,
-                    content: content
+                    content:data.content,
+                    images:data.image
                 }))
             })
 
