@@ -14,7 +14,7 @@ const Accounts = new Schema({
   avatar: String,
   role_id: String,
   status : String,
-  deleted: {
+  deleted: {  
     type : Boolean,
     default : false
   },

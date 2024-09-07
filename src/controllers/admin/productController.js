@@ -25,7 +25,7 @@ class index {
 
         // Find Search //
         const objectSearch = searchHelper(req.query)
-        if (objectSearch.regax) {
+        if (objectSearch.regax) { 
             find.title = objectSearch.regax
         }
 
