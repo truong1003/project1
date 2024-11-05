@@ -1,10 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const path=require('path')
 const router=require('./routers/client/index.route')
 const routerAdmin=require('./routers/admin/index.route')
 const db=require('./config/configDB')
-require('dotenv').config()
 const port = 4000
 const methodOverride = require('method-override')
 const systemConfig=require('./config/system')

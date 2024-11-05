@@ -1,7 +1,7 @@
 const express = require('express')
 const multer  = require('multer')
-const storageMulter =require('../../helper/storageMulter')
-const upload = multer({ storage: storageMulter() })
+const upload = multer()
+const uploadCloud = require("../../middlwares/admin/uploadCloud")
 const router = express.Router()
 const productController=require('../../controllers/admin/productController')
 const validate=require('../../validates/admin/validateProduct')
@@ -23,7 +23,7 @@ router.delete('/trash/deleted/:id', productController.deteleTrashItem)
 
 router.get('/create', productController.create)
 
-router.post('/create',upload.single('thumbnail'),validate.creatPost, productController.createPost)
+router.post('/create',upload.single('thumbnail'),uploadCloud.upload,validate.creatPost, productController.createPost)
 
 router.patch('/trash/change-multi', productController.restoreMulti)
 
